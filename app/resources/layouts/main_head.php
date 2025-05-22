@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="<?=CSS?>bootstrap.css">
     <!-- <link rel="stylesheet" type="text/css" href="app.css"> -->  
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
     <title><?=$args->title?></title>
     <style>
         body {
@@ -20,41 +21,21 @@
         }
     </style> 
 </head>
-<body>
-<div id="app" class="container-fluid p-0 sticky-top">
-        <header class="row m-0 bg-dark bg-gradient" data-bs-theme="dark">
-            <div class="col-9">
-                <h1 class="ml-3 mt-2">Foro FIE</h1>                      
-            </div>
-            <div class="col-3 mt-2">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" id="buscar-palabra" type="search" placeholder="Buscar" aria-label="Search">
-                    <button class="btn btn-outline-success" onclick="" type="button"><i class="bi bi-search"></i></button>
-                </form>
-            </div>
-        </header>
-        <nav class="navbar navbar-expand-lg bg-dark bg-gradient mb-3" data-bs-theme="dark">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/">Inicio</a>
-                        </li>                        
-                        <?php if( isset( $ua->sv ) && $ua->sv ) :?>
-                            <li class="nav-item">
-                                <a href="/UserPosts" class="nav-link btn btn-link">
-                                    Mis publicaciones
-                                </a>
-                            </li>
-                        <?php endif ?>
-                    </ul>
-                    <ul class="navbar-nav me-5 mb-2 d-flex">
+<body>    <!-- Sidebar / barra lateral -->
+    <section id="sidebar" class="sidebar">
+        <a href="#" class="brand"><i class='bx bx-plus-medical' ></i>Purple label</a>
+        <ul class="side-menu">
+            <li><a href="#"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
+            <li><a href="lista.html"><i class='bx bx-list-ul icon' ></i>lista</a></li>
+            <li><a href="#"><i class='bx bxs-report icon' ></i>formulario</a></li>
+            <li><a href="#"><i class='bx bx-detail icon' ></i>Detalles</a></li>
+        </ul>
+    </section>
+    <!-- End Sidebar -->
 
-                      
-                    <?php if( isset( $ua->sv ) && $ua->sv ) :?>
+    <!-- Topbar section -->
+    <nav class="topbar">
+<?php if( isset( $ua->sv ) && $ua->sv ) :?>
                         <li class="nav-item dropdown me5">
                             <a href="#" class="nav-link dropdown-toggle" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,11 +55,6 @@
                             </a>
                         </li>
                     <?php endif ?>
-                        
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>    
+    </nav>
 <?php
 }

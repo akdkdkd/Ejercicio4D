@@ -70,6 +70,24 @@ class DB {
         $this->w = ' (' . $this->w . ')';
         return $this;
     }
+    public function whereLike($conditions = []) {
+    $this->w = "";
+
+    if (count($conditions) > 0) {
+        foreach ($conditions as $cond) {
+            $field = $cond[0];
+            $value = addslashes($cond[1]);
+
+            $this->w .= "$field LIKE '%$value%' AND ";
+        }
+    }
+
+    $this->w .= "1";
+    $this->w = "($this->w)";
+
+    return $this;
+}
+
 
     public function orderBy( $ob = []){
         $this->o = "";
