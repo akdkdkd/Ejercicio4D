@@ -1,11 +1,11 @@
-/* Sidebar */
 * {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    padding:0 ;
     text-decoration: none;
+
 }
 
+/* Sidebar section styles section */
 
 .sidebar {
     width: 250px;
@@ -16,6 +16,7 @@
     padding: 1rem;
     position: fixed;
     height: 100vh;
+    top: 0;
 }
 
 .sidebar .brand {
@@ -29,7 +30,7 @@
     color: white;
 }
 
-.sidebar .side-menu {
+.sidebar .side-menu{
     list-style: none;
 }
 
@@ -53,7 +54,12 @@
     border-radius: 0.5rem;
 }
 
-/* Topbar */
+/* End of Sidebar section styles  */
+
+
+
+/* topbar section styles        */
+
 .topbar {
     width: calc(100% - 250px);
     margin-left: 250px;
@@ -63,91 +69,79 @@
     justify-content: flex-end;
     align-items: center;
     padding: 0 1rem;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     z-index: 10;
 }
 
 .topbar .userphoto img {
-    height: 40px;
     width: 40px;
+    height:40px;
     border-radius: 50%;
 }
 
-body {
-    background: #f4f5fa;
+
+/* End of topbar section styles */
+
+/* --- content Section Styles     --- */
+
+
+section.p-3 {
+    margin-left: 250px;
+    margin-top: 70;
+    background-color: #f4f5fa;
     height: 100%;
     width: 100%;
     position: fixed;
+    justify-content: center;
+    justify-items: center;
 }
 
-section.p-3 {
-    margin-left: 250px; /* Ancho de la sidebar */
-    margin-top: 70px;    /* Altura de la topbar + algo de espacio */
+.container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    padding: 15px;
+    background-color: white;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+
 }
 
-table tr td {
-    vertical-align: middle;
-}
-
-td button {
+.date-header {
+    display: grid;
+    align-items: center;
+    padding: 15px;
     margin: 5px;
+    margin-bottom: 15px;
+    justify-content: center;
 }
 
-td button i{
-    font-size: 20px;
+.date-header h1 {
+    font-size: 50px;
+    font-weight: 700;
 }
 
-.modal-header {
-    background: #0d6efd;
-    color: white;
-
-}
-
-.modal-body form {
+.date-body {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* espacio entre inputField y footer */
+    gap: 1rem;
 }
 
-/* DELETE this  */
-/* .modal-body form .imgHolder {
-    flex-basis: 32%;
-    height: 100%;
-    width: 200px;
-    height: 200px;
-    position: relative;
-    border-radius: 20px;
-} */
-/* DELETE this */
-
-.modal-body form .inputField {
+.container .date-body {
     border-left: 5px groove blue;
     padding-left: 20px;
     margin-top: 1rem;
 }
 
-form .inputField > div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-form .inputField > div label {
+.date-body > div {
     font-size: 20px;
     font-weight: 500;
-
 }
 
-#dateForm form .inputField > div label::after {
-    content: "*";
-    color: red;
-}
-
-form .inputField > div input{
+.date-body > div input {
     width: 75%;
     padding: 10px;
     border: none;
@@ -156,11 +150,14 @@ form .inputField > div input{
     border-bottom: 2px solid blue;
 }
 
-.modal-footer .sumbit {
-    font-size: 18px;
+.date-footer .modify-date, .cancel-date {
+        font-size: 18px;
+        width: 120px;
+        height: 40px;
 }
 
-#readData form .inputField input > div input {
+.date-footer intput > div input {
     color: #000000;
     font-size: 18px;
 }
+/* --- End content Section Styles --- */
