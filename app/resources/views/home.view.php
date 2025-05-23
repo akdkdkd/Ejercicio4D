@@ -2,26 +2,16 @@
     include_once LAYOUTS . 'main_head.php';
 
     setHeader($d);
+
 ?>
-<div class="row mx-auto">
-    <div class="col-2">
-        <div id="prev-posts" class="list-group small-font">
-            <!-- Publicaciones aneriores -->
-        </div>
-    </div>
-    <div class="col-8">
-        <div id="content" class="content">
-            <!-- Última publicación / publicacion seleccionada -->
+    <link rel="stylesheet" href="<?php echo CSS . 'index.css'; ?>">
 
+    <!-- Content section -->
+    <div class="content" id="content">
 
-        </div>
     </div>
-    <div class="col">
-        <div id="dates" class="list-group">
-            <!-- Calendario de publicaciones -->
-        </div>
-    </div>
-</div>
+
+    <!-- End of Content section -->
 
 
 <?php
@@ -32,8 +22,8 @@
 
     <script>
         $( function(){
-            app.previousPosts();
-            app.lastPost();
+            app.getCitas();
+            // app.lastPost();
         })
     </script>
 

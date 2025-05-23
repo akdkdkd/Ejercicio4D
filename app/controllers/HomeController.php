@@ -11,7 +11,7 @@ class HomeController extends Controller {
     public function index($params = null){
         $response = [
             'ua' => SC::sessionValidate() ?? [ 'sv' => 0 ],
-            'title' => 'ForoFIE',
+            'title' => 'Consultorio Jade',
             'code' => 200
         ];
         View::render('home',$response);

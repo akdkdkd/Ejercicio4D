@@ -10,7 +10,7 @@ define('URL', IS_LOCAL ? '127.0.0.5:' . PORT . DS : 'REMOTE URL');
 define('DB_HOST', IS_LOCAL ? 'localhost' : 'REMOTE HOST');
 define('DB_USER', IS_LOCAL ? 'root' : 'REMOTE USER');
 define('DB_PASS', IS_LOCAL ? '' : 'REMOTE PASSWORD');
-define('DB_NAME', IS_LOCAL ? 'forofie' : 'REMOTE DATABASE NAME');
+define('DB_NAME', IS_LOCAL ? 'consultorio' : 'REMOTE DATABASE NAME');
 
 define('CLASSES',       ROOT . 'classes' . DS);
 define('CLASSES_PATH',  ROOT . '..' . DS);
