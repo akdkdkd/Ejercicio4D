@@ -3,52 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purple label</title>
     <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Purple label</title>
 </head>
 <body>
-    
-    <!-- Sidebar / barra lateral -->
+    <!-- Sidebar section -->
     <section id="sidebar" class="sidebar">
         <a href="#" class="brand"><i class='bx bx-plus-medical' ></i>Purple label</a>
         <ul class="side-menu">
-            <li><a href="#"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
+            <li><a href="index.html"><i class="bi bi-house-door-fill"></i>Home</a></li>
+            <li><a href="dashboard.html"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
             <li><a href="lista.html"><i class='bx bx-list-ul icon' ></i>lista</a></li>
             <li><a href="detalles.html"><i class='bx bx-detail icon' ></i>Detalles</a></li>
         </ul>
     </section>
-    <!-- End Sidebar -->
+    <!-- End of Sidebar section -->
 
-    <!-- Topbar section -->
+    <!-- Topbar section-->
     <nav class="topbar">
         <div class="userphoto">
             <img src="assets/images/profileImageBlank.jpg" alt="user Photo">
         </div>
     </nav>
-    <!-- End  of Topbar section-->
+    <!-- End of Topbar section -->
 
     <!-- Content section -->
-    <section class="content">
-        <div class="container">
-            <div class="card doctor-card">
-                <h1>7 de 14</h1>
-                <p>DOCTORES DISPONIBLES</p>
-            </div>
-        
-            <div class="card patient-card">
-                <h1>15</h1>
-                <p>PACIENTES</p>
-            </div>
-        
-            <div class="card appointment-card">
-                <h1>9</h1>
-                <p>RESUMEN DE CITAS DEL DÍA</p>
-            </div>
-        </div>
-    </section>
+    <h1 class="text-center mt-4">Bienvenido a Purple label</h1>
+    <p class="text-center">Gestiona tus citas, pacientes y reportes con facilidad</p>
+
+
     <!-- End of Content section -->
 
+    <div class="container mt-5">
+        <div class="row text-center">
+
+            <!-- Doctores activos -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Doctores Activos</h5>
+                        <p class="display-4" id="activeDoctors">3</p> <!-- Puedes cambiar este número dinámicamente -->
+                        <i class="bi bi-person-badge text-primary" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pacientes registrados -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Pacientes Registrados</h5>
+                        <p class="display-4" id="registeredPatients">25</p> <!-- Igual aquí -->
+                        <i class="bi bi-people text-success" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Citas por Semana</h2>
+        <canvas id="weeklyAppointmentsChart" height="100"></canvas>
+    </div>
+
+    <div class="container text-center my-5">
+        <button class="btn btn-primary btn-lg" id="btnAgendarCita">
+            <i class="bi bi-calendar-plus me-2"></i> Agendar Cita
+        </button>
+    </div>
+
+    <!-- Modal para Agendar Cita -->
+    <div class="modal fade" id="modalAgendarCita" tabindex="-1" aria-labelledby="modalAgendarCitaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formAgendarCita">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAgendarCitaLabel">Agendar Nueva Cita</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Nombre del paciente -->
+                        <div class="mb-3">
+                            <label for="nombrePaciente" class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" id="nombrePaciente" required>
+                        </div>
+
+                        <!-- Día -->
+                        <div class="mb-3">
+                            <label for="fechaCita" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fechaCita" required>
+                        </div>
+                    
+                        <!-- Hora -->
+                        <div class="mb-3">
+                            <label for="horaCita" class="form-label">Hora</label>
+                            <input type="time" class="form-control" id="horaCita" required>
+                        </div>
+                    
+                        <!-- Motivo -->
+                        <div class="mb-3">
+                            <label for="motivoCita" class="form-label">Motivo de la cita</label>
+                            <textarea class="form-control" id="motivoCita" rows="4" maxlength="1000" required></textarea>
+                            <div class="form-text">Máximo 1000 caracteres.</div>
+                        </div>
+                    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar Cita</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Scripts -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/chartIndex.js"></script>
+    <script src="assets/js/index.js"></script>
+
+    <!-- End onf Scripts section-->
 </body>
 </html>
