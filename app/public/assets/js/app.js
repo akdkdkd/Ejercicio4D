@@ -11,6 +11,7 @@ const app = {
         togglecomments: '/Posts/getComments',
         savecomment   : '/Posts/saveComment',
         citas : '/Citas/getCitas',
+        getPacientes : '/Pacientes/getPacientes',
 
     },
     user :{
@@ -27,12 +28,12 @@ const app = {
         return `
                 <div class="container">
                     <div class="card doctor-card">
-                        <h1>7 de 14</h1>
+                        <h1>${citas[3].tt} de ${citas[2].tt}</h1>
                         <p>DOCTORES DISPONIBLES</p>
                     </div>
                 
                     <div class="card patient-card">
-                        <h1>15</h1>
+                        <h1>${citas[1].tt}</h1>
                         <p>PACIENTES</p>
                     </div>
                 

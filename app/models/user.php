@@ -8,10 +8,13 @@
         protected $fillable = [
             'name',
             'username',
+            'contacto',
+            'fenac',
+            'genero',
             'email',
-            'passwd',
-            'tipo',
+            'especialidad',
             'activo',
+            'passwd'
         ];
 
         public function __construct(){
