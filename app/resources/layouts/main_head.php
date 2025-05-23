@@ -26,7 +26,7 @@
         <a href="#" class="brand"><i class='bx bx-plus-medical' ></i>Purple label</a>
         <ul class="side-menu">
             <li><a href="#"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
-            <li><a href="lista.html"><i class='bx bx-list-ul icon' ></i>lista</a></li>
+            <li><a href="/lista"><i class='bx bx-list-ul icon' ></i>lista</a></li>
             <li><a href="#"><i class='bx bxs-report icon' ></i>formulario</a></li>
             <li><a href="#"><i class='bx bx-detail icon' ></i>Detalles</a></li>
         </ul>

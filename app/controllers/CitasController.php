@@ -6,8 +6,9 @@ use app\models\posts as posts;
 use app\models\comments as comments;
 use app\models\citas as citas;
 use app\models\interactions as inter;
-use app\models\pacientes;
+use app\models\pacientes as pacientes;
 use app\models\user as user;
+// use app\models\pacientes
 
 class CitasController extends Controller {
     public function __construct(){
@@ -45,7 +46,17 @@ public function getcitas($params = null){
                     ->get();
 
 
+
     echo json_encode(array_merge(json_decode($ccitas), json_decode($pac), json_decode($tdoc), json_decode($activos)));
+}
+
+
+public function getlista($params = null){
+        //obtener pacientes
+        $citas = new citas();
+    $result = $citas->getCitas($params[2]);
+
+    echo json_encode($result);
 }
 
 // public function getPacientes($params = null){
