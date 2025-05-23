@@ -186,7 +186,7 @@ form .inputField > div input{
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dateForm">Nueva cita <i class="bi bi-calendar-plus"></i></button>
             </div>
 
-            <div class="row content" id="content">
+            <div class="row list" id="list">
 
             </div>
 
@@ -216,11 +216,6 @@ form .inputField > div input{
                         </div> -->
 
                         <div class="inputField">
-
-                            <div>
-                                <label for="nameDoctor">Doctor: </label>
-                                <input type="text" name="" id="nameDoctor">
-                            </div>
 
                             <div>
                                 <label for="namePatient">Paciente: </label>
