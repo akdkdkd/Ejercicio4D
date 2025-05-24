@@ -11,19 +11,28 @@
 </head>
 <body>
     <!-- Sidebar section -->
+    <!-- Botón para abrir/cerrar el sidebar en móviles -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="bi bi-list"></i>
+    </button>
     <section id="sidebar" class="sidebar">
-        <a href="#" class="brand"><i class='bx bx-plus-medical' ></i>Purple label</a>
         <ul class="side-menu">
-            <li><a href="index.html"><i class="bi bi-house-door-fill"></i>Home</a></li>
-            <li><a href="dashboard.html"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
-            <li><a href="lista.html"><i class='bx bx-list-ul icon' ></i>lista</a></li>
-            <li><a href="detalles.html"><i class='bx bx-detail icon' ></i>Detalles</a></li>
+            <li><a href="index.html"><i class="bi bi-house-door-fill icon"></i>Home</a></li>
+            <li><a href="dashboard.html"><i class="bx bxs-dashboard icon" ></i>Dashboard</a></li>
+            <li><a href="lista.html"><i class="bi bi-card-checklist icon"></i>lista</a></li>
+            <li><a href="detalles.html"><i class="bx bx-detail icon" ></i>Detalles</a></li>
         </ul>
     </section>
     <!-- End of Sidebar section -->
 
     <!-- Topbar section-->
     <nav class="topbar">
+        <div class="topbar-left">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <span class="topbar-title">Purple label <i class='bx bx-plus-medical' ></i></span>
+        </div>
         <div class="userphoto">
             <img src="assets/images/profileImageBlank.jpg" alt="user Photo">
         </div>
@@ -31,17 +40,17 @@
     <!-- End of Topbar section -->
 
     <!-- Content section -->
-    <h1 class="text-center mt-4">Bienvenido a Purple label</h1>
+    <h1 class="text-center mt-4">Bienvenido</h1>
     <p class="text-center">Gestiona tus citas, pacientes y reportes con facilidad</p>
 
 
     <!-- End of Content section -->
 
-    <div class="container mt-5">
+    <div class="container-fluid mt-5">
         <div class="row text-center">
 
             <!-- Doctores activos -->
-            <div class="col-md-6 mb-4">
+            <div class="col-sm-12 col-md-6 mb-4">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="card-title">Doctores Activos</h5>
@@ -52,7 +61,7 @@
             </div>
 
             <!-- Pacientes registrados -->
-            <div class="col-md-6 mb-4">
+            <div class="col-sm-12 col-md-6 mb-4">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="card-title">Pacientes Registrados</h5>
@@ -65,13 +74,13 @@
         </div>
     </div>
 
-    <div class="container mt-5">
+    <div class="container-fluid mt-5">
         <h2 class="text-center mb-4">Citas por Semana</h2>
         <canvas id="weeklyAppointmentsChart" height="100"></canvas>
     </div>
 
-    <div class="container text-center my-5">
-        <button class="btn btn-primary btn-lg" id="btnAgendarCita">
+    <div class="container-fluid text-center my-5">
+        <button class="btn btn-primary btn-lg w-100 w-sm-auto" id="btnAgendarCita">
             <i class="bi bi-calendar-plus me-2"></i> Agendar Cita
         </button>
     </div>
