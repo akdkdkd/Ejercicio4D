@@ -44,7 +44,7 @@
             $_SESSION['id']       = $datos[0]->id;
             $_SESSION['username'] = $datos[0]->username;
             $_SESSION['passwd']   = $datos[0]->passwd;
-            $_SESSION['tipo']     = $datos[0]->tipo;
+            // $_SESSION['tipo']     = $datos[0]->tipo;
             session_write_close();
             return json_encode( ["r" => true]);
 
@@ -65,7 +65,7 @@
                     return ['username'=>$datos['username'],
                             'sv'=>$datos['sv'],
                             'id'=>$datos['id'],
-                            'tipo'=>$datos['tipo']];
+                            ];
                 }else{
                     session_write_close();
                     self::sessionDestroy();
@@ -87,6 +87,7 @@
         public function logout(){
             $this->sessionDestroy();
             //Redirect::to('/');
+            header("Location: /");
             exit();
         }
  

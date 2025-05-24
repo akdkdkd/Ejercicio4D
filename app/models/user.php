@@ -35,4 +35,11 @@
            return $this -> create();
         }
 
+        public function getUser(){
+            $result = $this -> count('id')
+                            -> where([['activo',1]])
+                            -> get();
+            return $result;
+        }
+
     }

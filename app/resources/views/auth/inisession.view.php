@@ -65,7 +65,7 @@
                 }).then( resp => resp.json() )
                 .then ( resp => {
                     if( resp.r !== false ){
-                        location.href = "/"
+                        location.href = "/dashboard"
                     }else{
                         $("#error").removeClass('d-none')
                     }

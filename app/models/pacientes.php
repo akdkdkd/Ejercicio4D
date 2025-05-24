@@ -7,7 +7,7 @@
         protected $table;
         protected $fillable = [
             'name',
-            'nss',
+            'curp',
             'contacto',
             'fenac',
             'genero',
@@ -39,12 +39,18 @@ public function getPacientes($params = null){
         return json_encode([]); // o lo que corresponda
     }
 
-    $result = $this->select(['a.id', 'a.name', 'a.nss', 'a.contacto', 'a.fenac', 'a.genero', 'a.email'])
+    $result = $this->select(['a.id', 'a.name', 'a.curp', 'a.contacto', 'a.fenac', 'a.genero', 'a.email'])
                    ->join('citas b', 'a.id=b.paciente_id')
                    ->where([['b.doctor_id', $params], ['b.estado', 'Pendiente']])
                    ->get();
     
     
+    return $result;
+}
+
+public function getAllPacientes(){
+    $result = $this->count('id')
+                   ->get();
     return $result;
 }
 

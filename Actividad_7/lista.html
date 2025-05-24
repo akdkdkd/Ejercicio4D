@@ -1,234 +1,498 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/lista.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Purple label</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema Hidropónico – Rediseño</title>
+    <style>
+        :root {
+          --primary: #4caf50;
+          --primary-dark: #2e7d32;
+          --secondary: #f44336;
+          --bg: #f3f6f9;
+          --card-bg: #ffffff;
+          --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          --radius: 1rem;
+          --alert-bg: #fff3f3;
+          --alert-border: #f44336;
+        }
+
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          background-color: var(--bg);
+          color: #222;
+          line-height: 1.6;
+        }
+
+        header {
+          background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+          color: #fff;
+          padding: 1.5rem;
+          text-align: center;
+          box-shadow: var(--shadow);
+        }
+
+        nav {
+          display: flex;
+          background-color: #333;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+
+        nav button {
+          flex: 1;
+          padding: 1rem;
+          background: none;
+          border: none;
+          color: #fff;
+          font-size: 1rem;
+          letter-spacing: 0.02em;
+          transition: background-color 200ms ease;
+          cursor: pointer;
+        }
+
+        nav button:hover,
+        nav button.active {
+          background-color: var(--primary);
+        }
+
+        main {
+          max-width: 960px;
+          margin: 2rem auto;
+          padding: 0 1rem;
+        }
+
+        section {
+          display: none;
+          animation: fade 300ms ease forwards;
+        }
+
+        section.active {
+          display: block;
+        }
+
+        @keyframes fade {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .card {
+          background-color: var(--card-bg);
+          padding: 1.25rem;
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
+
+        .card span {
+          font-weight: 400;
+          font-size: 1rem;
+        }
+
+        .chart-card {
+          background-color: var(--card-bg);
+          padding: 1rem;
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          margin-bottom: 1.5rem;
+        }
+
+        .chart-card canvas {
+          width: 100% !important;
+          height: 260px !important;
+        }
+
+        /* Estilos de Alertas */
+        .alertas-list {
+          list-style: none;
+        }
+
+        .alerta {
+          background-color: var(--alert-bg);
+          border-left: 4px solid var(--alert-border);
+          padding: 1rem;
+          margin-bottom: 1rem;
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          font-size: 1rem;
+        }
+
+        .empty {
+          text-align: center;
+          color: #666;
+          font-style: italic;
+          margin-top: 2rem;
+        }
+    #mediciones-list .card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+  }
+
+  #mediciones-list .card div {
+    flex: 1 1 45%;
+    min-width: 120px;
+    background-color: #e8f5e9; /* fondo suave para cada dato */
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    text-align: center;
+    font-weight: 700;
+  }
+
+  #mediciones-list .card div label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #555;
+    margin-bottom: 0.2rem;
+  }
+
+    </style>
 </head>
+
 <body>
-    
-    <!-- Sidebar -->
-    <!-- End of Sidebar -->
+<header>
+    <h1>Ceres</h1>
+    <p>Monitoreo en tiempo real de tu sistema hidropónico</p>
+    <!-- Elementos dinámicos para planta -->
+    <p id="plant-nombre" style="font-weight: 700; font-size: 1.2rem; margin-top: 0.5rem;">--</p>
+    <p id="plant-descripcion" style="font-size: 1rem; color: #eee;">--</p>
+</header>
 
-    <section id="sidebar" class="sidebar">
-        <a href="#" class="brand"><i class='bx bx-plus-medical' ></i>Purple label</a>
-        <ul class="side-menu">
-            <li><a href="index.html"><i class="bi bi-house-door-fill"></i>Home</a></li>
-            <li><a href="dashboard.html"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
-            <li><a href="#"><i class='bx bx-list-ul icon' ></i>lista</a></li>
-            <li><a href="detalles.html"><i class='bx bx-detail icon' ></i>Detalles</a></li>
+
+<nav>
+    <button class="active" onclick="showSection('inicio')">Inicio</button>
+    <button onclick="showSection('mediciones')">Mediciones</button>
+    <button onclick="showSection('graficas')">Gráficas</button>
+    <button onclick="showSection('alertas')">Alertas</button>
+</nav>
+
+<main>
+    <!-- Agrega dentro de <main>, justo antes o después de las otras secciones -->
+    <section id="error-conexion" style="display:none; text-align:center; padding: 2rem;">
+        <h2 style="color: var(--secondary); margin-bottom: 1rem;">¡Sin conexión!</h2>
+        <p>No se pudo conectar con la API del sistema hidropónico.</p>
+        <p>Por favor, revisa la conexión a internet del Raspberry Pi y vuelve a intentarlo.</p>
+    </section>
+
+    <!-- Sección Inicio -->
+    <section id="inicio" class="active">
+        <div class="grid">
+            <div class="card" id="ph">pH <span>--</span></div>
+            <div class="card" id="ec">CE <span>--</span></div>
+            <div class="card" id="nivel">Nivel Agua <span>--</span></div>
+            <div class="card" id="temp">Temperatura <span>--</span></div>
+        </div>
+    </section>
+
+    <!-- Sección Mediciones -->
+    <section id="mediciones">
+        <div id="mediciones-list"></div>
+    </section>
+
+    <!-- Sección Gráficas -->
+    <section id="graficas">
+        <div class="chart-card"><canvas id="graficaPh"></canvas></div>
+        <div class="chart-card"><canvas id="graficaCe"></canvas></div>
+        <div class="chart-card"><canvas id="graficaNivel"></canvas></div>
+        <div class="chart-card"><canvas id="graficaTemp"></canvas></div>
+    </section>
+
+    <!-- Sección Alertas -->
+    <section id="alertas">
+        <ul class="alertas-list">
+            <!-- Placeholder para futuras alertas -->
         </ul>
+        <p class="empty">No hay alertas por el momento</p>
     </section>
+</main>
 
-    <!-- Topbar -->
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let charts = [];
 
-    <nav class="topbar">
-        <div class="userphoto">
-            <img src="assets/images/profileImageBlank.jpg" alt="user Photo">
-        </div>
-    </nav>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelector(`nav button[onclick="showSection('${id}')"]`).classList.add('active');
+    }
 
-    <!-- End of Topbar -->
+    function destruirGraficas() {
+      charts.forEach(c => c.destroy());
+      charts = [];
+    }
 
-    <!-- Title -->
-    <h1>Citas Agendadas</h1>
-    <!-- End of Title -->
+    function crearGradiente(ctx, color) {
+      const grad = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+      grad.addColorStop(0, `${color},0.4)`);
+      grad.addColorStop(1, `${color},0)`);
+      return grad;
+    }
 
-    <!-- Content section -->
-    <section class="p-3">
+    // Obtener datos de planta
+async function cargarPlanta() {
+try {
+  const res = await fetch('https://honest-lionfish-bold.ngrok-free.app/api/planta', {
+    headers: { Accept: 'application/json', 'ngrok-skip-browser-warning': 'true' }
+  });
+  if (!res.ok) throw new Error('Error al obtener planta');
 
-        <div class="row">
-            <div class="col-12">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dateForm">Nueva cita <i class="bi bi-calendar-plus"></i></button>
-            </div>
+  const plantas = await res.json();
+  if (plantas.length === 0) throw new Error('No se encontraron plantas');
 
-            <div class="row">
-                <div class="col-12">
-                    <table class="table table-striped table-hover mt-3 text-center table-bordered">
-                        
-                        <thead>
-                            <th>Cita No.</th>
-                            <th>Doctor</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Paciente</th>
-                            <th>Action</th>
-                        </thead>
+  const planta = plantas[0]; // Accede a la primera planta del array
+  document.getElementById('plant-nombre').textContent = planta.nombre;
+  document.getElementById('plant-descripcion').textContent = planta.descripcion;
+} catch (err) {
+  console.error(err);
+}
+}
 
-                        <tbody id="data">
-                            <tr>
-                                <td>1</td>
-                                <td>Fernando Parra</td>
-                                <td>5 de Mayo</td>
-                                <td> 8:40 a.m</td>
-                                <td>John Doe</td>
-                                <td>
-                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#readData"><i class="bi bi-eye"></i></button>
-                                    <button class="btn btn-primary"><i class="bi bi-pencil-square"></i></button>
-                                    <button class="btn btn-danger"><i class="bi bi-trash2-fill"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
 
-                        <tbody id="data">
-                            <tr>
-                                <td>2</td>
-                                <td>Fernando Parra</td>
-                                <td>5 de Mayo</td>
-                                <td> 13:10 p.m</td>
-                                <td>Jane Doe</td>
-                                <td>
-                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#readData"><i class="bi bi-eye"></i></button>
-                                    <button class="btn btn-primary"><i class="bi bi-pencil-square"></i></button>
-                                    <button class="btn btn-danger"><i class="bi bi-trash2-fill"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
 
-                        <tbody id="data">
-                            <tr>
-                                <td>3</td>
-                                <td>Fernando Parra</td>
-                                <td>5 de Mayo</td>
-                                <td> 7:10 a.m</td>
-                                <td>Danny Doe</td>
-                                <td>
-                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#readData"><i class="bi bi-eye"></i></button>
-                                    <button class="btn btn-primary"><i class="bi bi-pencil-square"></i></button>
-                                    <button class="btn btn-danger"><i class="bi bi-trash2-fill"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
+    async function cargarDatos() {
+      try {
+        const res = await fetch('https://honest-lionfish-bold.ngrok-free.app/api/mediciones', {
+          headers: { Accept: 'application/json', 'ngrok-skip-browser-warning': 'true' }
+        });
 
-                    </table>
-                </div>
-            </div>
+        if (!res.ok || !res.headers.get('content-type')?.includes('application/json')) {
+          throw new Error('Respuesta no JSON');
+        }
 
-        </div>
-    </section>
-    <!-- End of content section -->
+        const datos = await res.json();
+        if (!Array.isArray(datos) || !datos.length) return;
 
-    <!-- Modal Form -->
-    <div class="modal fade" id="dateForm">
+        // Oculta mensaje de error y muestra contenido normal
+        document.getElementById('error-conexion').style.display = 'none';
+        document.querySelectorAll('section').forEach(s => {
+          if (s.id !== 'error-conexion') s.style.display = '';
+        });
 
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
+        const ultima = datos[datos.length - 1];
+        document.querySelector('#ph span').textContent = ultima.ph_value;
+        document.querySelector('#ec span').textContent = `${ultima.ec_value} mS/cm`;
+        document.querySelector('#nivel span').textContent = `${ultima.water_value}%`;
+        document.querySelector('#temp span').textContent = `${ultima.temp_value}°C`;
 
-                <div class="modal-header">
-                    <h4 class="modal-title">Llena el Formulario</h4>
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+        // Listado Mediciones
+        const lista = document.getElementById('mediciones-list');
+        lista.innerHTML = '';
+        datos.slice(-10).reverse().forEach(m => {
+          const div = document.createElement('div');
+          div.className = 'card';
 
-                <div class="modal-body">
+          const fecha = document.createElement('div');
+          fecha.style.flexBasis = '100%';
+          fecha.style.fontSize = '0.9rem';
+          fecha.style.fontWeight = '400';
+          fecha.style.color = '#666';
+          fecha.style.marginBottom = '0.6rem';
+          const fechaObj = new Date(m.created_at);
+            fechaObj.setHours(fechaObj.getHours() - 6); // Ajustar a UTC-6
+            const dia = fechaObj.getDate().toString().padStart(2, '0');
+            const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
+            const año = fechaObj.getFullYear();
+            const horas = fechaObj.getHours().toString().padStart(2, '0');
+            const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
+            const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
 
-                    <form action="#" id="myForm">
-                        <!-- <div class="card imgHolder">
-                            <label for="imgInput" class="upload">
-                                <input type="file" name="" id="imgInput">
-                            </label>
-                            <img src="assets/images/profileImageBlank.jpg" alt="profile icon web" height="200px" width="200px">
-                        </div> -->
+            fecha.textContent = `${dia}/${mes}/${año} ${horas}:${minutos}:${segundos}`;
 
-                        <div class="inputField">
+          div.appendChild(fecha);
 
-                            <div>
-                                <label for="nameDoctor">Doctor: </label>
-                                <input type="text" name="" id="nameDoctor">
-                            </div>
+          const campos = [
+            { label: 'pH', value: m.ph_value },
+            { label: 'CE (mS/cm)', value: m.ec_value },
+            { label: 'Agua (%)', value: m.water_value },
+            { label: 'Temp (°C)', value: m.temp_value }
+          ];
 
-                            <div>
-                                <label for="namePatient">Paciente: </label>
-                                <input type="text" name="" id="namePatient" placeholder="Nombre del paciente">
-                            </div>
+          campos.forEach(campo => {
+            const campoDiv = document.createElement('div');
+            const label = document.createElement('label');
+            label.textContent = campo.label;
+            const valor = document.createElement('div');
+            valor.textContent = campo.value;
+            campoDiv.appendChild(label);
+            campoDiv.appendChild(valor);
+            div.appendChild(campoDiv);
+          });
 
-                            <div>
-                                <label for="day">Día: </label>
-                                <input type="date" name="" id="day">
-                            </div>
+          lista.appendChild(div);
+        });
 
-                            <div>
-                                <label for="hour">Hora: </label>
-                                <input type="text" name="" id="hour">
-                            </div>
+        // Graficas
+        destruirGraficas();
+        const ultimos = datos.slice(-20);
+const labels = ultimos.map(m => {
+  const fechaUTC = new Date(m.created_at);
+  fechaUTC.setHours(fechaUTC.getHours() - 6); // Ajustar a UTC-6
 
-                            <div>
-                                <label for="reason">Motivo: </label>
-                                <input type="text" name="" id="reason">
-                            </div>
-                        </div>
+  const horas = fechaUTC.getHours().toString().padStart(2, '0');
+  const minutos = fechaUTC.getMinutes().toString().padStart(2, '0');
+  const segundos = fechaUTC.getSeconds().toString().padStart(2, '0');
 
-                        <div class="modal-footer">
-                            <button type="submit" form="myForm" class="btn btn-primary sumbit">Agendar</button>
-                        </div>
+  return `${horas}:${minutos}:${segundos}`;
+});
 
-                    </form>
-                </div>
 
-            </div>
-        </div>
-    </div>
-    <!-- End of Modal Form -->
-    
-    <!-- Read Data Modal section -->
-    
-    <div class="modal fade" id="readData">
 
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
+        const sets = [
+          { id: 'graficaPh', label: 'pH', data: ultimos.map(m => +m.ph_value), color: 'rgba(76,175,80' },
+          { id: 'graficaCe', label: 'CE (mS/cm)', data: ultimos.map(m => +m.ec_value), color: 'rgba(33,150,243' },
+          { id: 'graficaNivel', label: 'Nivel Agua (%)', data: ultimos.map(m => +m.water_value), color: 'rgba(0,150,136' },
+          { id: 'graficaTemp', label: 'Temp (°C)', data: ultimos.map(m => +m.temp_value), color: 'rgba(255,152,0' }
+        ];
 
-                <div class="modal-header">
-                    <h4 class="modal-title">Cita Agendada</h4>
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+        sets.forEach(cfg => {
+          const ctx = document.getElementById(cfg.id).getContext('2d');
+          charts.push(new Chart(ctx, {
+            type: 'line', data: { labels, datasets: [{ label: cfg.label, data: cfg.data, borderColor: `${cfg.color},1)`, backgroundColor: crearGradiente(ctx, cfg.color), pointRadius: 3, tension: 0.35, fill: true }] },
+            options: { maintainAspectRatio: false, scales: { x: { grid: { display: false } }}, plugins: { legend: { display: true }, tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', cornerRadius: 6, padding: 10 } } }
+          }));
+        });
+      } catch (err) {
+        console.error('Error al cargar datos:', err);
+        // Muestra el mensaje de error y oculta las demás secciones
+        document.getElementById('error-conexion').style.display = 'block';
+        document.querySelectorAll('section').forEach(s => {
+          if (s.id !== 'error-conexion') s.style.display = 'none';
+        });
+      }
+    }
 
-                <div class="modal-body">
+      async function cargarAlertas() {
+  try {
+    const res = await fetch(
+      "https://honest-lionfish-bold.ngrok-free.app/api/alertas",
+      {
+        headers: {
+          Accept: "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
+    );
+    if (!res.ok || !res.headers.get("content-type")?.includes("application/json"))
+      throw new Error("Respuesta no JSON");
 
-                    <form action="#" id="myForm">
-                        <!-- <div class="card imgHolder">
-                            <label for="imgInput" class="upload">
-                                <input type="file" name="" id="imgInput">
-                            </label>
-                            <img src="assets/images/profileImageBlank.jpg" alt="profile icon web" height="200px" width="200px">
-                        </div> -->
+    const alertas = await res.json();
+    const lista = document.querySelector(".alertas-list");
+    const vacio = document.querySelector(".empty");
 
-                        <div class="inputField">
+    // limpia la lista
+    lista.innerHTML = "";
 
-                            <div>
-                                <label for="namePatient">Paciente: </label>
-                                <input type="text" name="" id="namePatient" disabled>
-                            </div>
+    if (!Array.isArray(alertas) || alertas.length === 0) {
+      vacio.style.display = "block";
+      return;
+    }
 
-                            <div>
-                                <label for="day">Día: </label>
-                                <input type="date" name="" id="day" disabled> 
-                            </div>
+    // oculta el mensaje "No hay alertas"
+    vacio.style.display = "none";
 
-                            <div>
-                                <label for="hour">Hora: </label>
-                                <input type="text" name="" id="hour" disabled>
-                            </div>
+    // ordena de la más reciente a la más antigua
+    alertas.forEach(alert => {
+      // Crear el elemento de alerta
+      const li = document.createElement('li');
+      li.className = 'alerta';
 
-                            <div>
-                                <label for="reason">Motivo: </label>
-                                <input type="text" name="" id="reason" disabled>
-                            </div>
-                        </div>
+      // Crear un elemento donde mostrar la fecha
+      const fechaAlerta = document.createElement('span');
+      const fechaAlertaObj = new Date(alert.created_at);
+      fechaAlertaObj.setHours(fechaAlertaObj.getHours() - 6);
+      const diaA = fechaAlertaObj.getDate().toString().padStart(2, '0');
+      const mesA = (fechaAlertaObj.getMonth() + 1).toString().padStart(2, '0');
+      const añoA = fechaAlertaObj.getFullYear();
+      const horasA = fechaAlertaObj.getHours().toString().padStart(2, '0');
+      const minutosA = fechaAlertaObj.getMinutes().toString().padStart(2, '0');
+      const segundosA = fechaAlertaObj.getSeconds().toString().padStart(2, '0');
+      fechaAlerta.textContent = `${diaA}/${mesA}/${añoA} ${horasA}:${minutosA}:${segundosA}`;
+      fechaAlerta.style.display = "block";
+      fechaAlerta.style.fontSize = "0.9em";
+      fechaAlerta.style.color = "#888";
+      fechaAlerta.style.marginBottom = "0.3em";
 
-                    </form>
-                </div>
+      // Mensaje de alerta
+      const mensaje = document.createElement('div');
+      mensaje.textContent = alert.mensaje || alert.mensaje_alerta || "Alerta sin mensaje";
 
-            </div>
-        </div>
-    </div>
+      li.appendChild(fechaAlerta);
+      li.appendChild(mensaje);
 
-    <!-- End of Read Data Modal section -->
+      // si en el futuro quieres marcar si ya está resuelta
+      if (alert.resuelta) {
+        li.style.opacity = "0.6";
+      }
 
-    <!-- Script section -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+      lista.appendChild(li);
+    });
+  } catch (err) {
+    console.error("Error al cargar alertas:", err);
+    // deja el mensaje vacío visible si algo falla
+  }
+}
 
+
+    // Carga inicial
+    window.onload = async () => {
+      await cargarPlanta();
+      await cargarDatos();
+      await cargarAlertas();
+    };
+
+  setInterval(() => {
+    cargarDatos();
+    cargarPlanta();
+    cargarAlertas();
+  }, 60000);
+
+    setInterval(async () => {
+    const respuesta = await fetch('https://honest-lionfish-bold.ngrok-free.app/api/alertas');
+    const alertas = await respuesta.json();
+
+    if (alertas.length > 0) {
+        // Mostrar notificación
+        if (Notification.permission === 'granted') {
+        new Notification('Nueva alerta', {
+            body: alertas[0].mensaje,
+        });
+        }
+    }
+    }, 60000); // cada 60 segundos
+
+</script>
 </body>
 </html>

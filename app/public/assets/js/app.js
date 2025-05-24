@@ -4,27 +4,55 @@ const app = {
         inisession: '/Session/iniSession',
         login: '/Session/userAuth',
         register: '/Register/register',
-        prevpost: '/Posts/getPosts',
-        lastpost: '/Posts/lastPost',
-        openpost: '/Posts/openPost',
-        togglelike: '/Posts/toggleLike',
-        togglecomments: '/Posts/getComments',
-        savecomment: '/Posts/saveComment',
         citas: '/Citas/getCitas',
         getPacientes: '/Pacientes/getPacientes',
         getlitas: '/Citas/getlista',
+        inicio: '/Home/getHome',
     },
     user: {
         sv: false,
         id: '',
         username: '',
-        tipo: ''
     },
     $pp: $('#prev-posts'),
     $lp: $('#content'),
     $list: $('#list'),
+    $inicio: $('#home'),
 
     currentCitas: [], // Aquí almacenaremos las citas cargadas
+
+    inicio: function (number) {
+        // console.log($number);
+        return `
+            <div class="row text-center">
+
+            <!-- Doctores activos -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Doctores Activos</h5>
+                        <p class="display-4" id="activeDoctors">${number[0].tt}</p>
+                        <i class="bi bi-person-badge text-primary" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pacientes registrados -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Pacientes Registrados</h5>
+                        <p class="display-4" id="registeredPatients">${number[1].tt}</p> <!-- Igual aquí -->
+                        <i class="bi bi-people text-success" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        `
+    },
+
+
 
     mainPostHTMLBuilder: function (citas) {
         console.log(citas);
@@ -193,6 +221,20 @@ const app = {
         } catch (err) {
             console.error(err);
             this.$list.html('<h2>Error al cargar las citas</h2>');
+        }
+    },
+
+    loadinicio: async function () {
+        try {
+            let html = '';
+            let number = await $.getJSON(this.routes.inicio);
+            console.log(number);
+            if(number.length > 0) {
+                html = this.inicio(number);
+            }
+            this.$inicio.html(html);
+        }catch (err) {
+            console.error(err);
         }
     },
 
