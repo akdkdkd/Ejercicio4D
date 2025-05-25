@@ -42,4 +42,11 @@
             return $result;
         }
 
+        public function getAllUser(){
+            $result = $this -> select(['a.id', 'a.name', 'a.username', 'a.contacto', 'a.fenac', 'a.genero', 'a.email', 'a.especialidad'])
+                            -> where([['activo',1]])
+                            -> get();
+            return $result;
+        }
+
     }

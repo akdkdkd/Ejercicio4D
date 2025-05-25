@@ -248,11 +248,40 @@ body.sidebar-hidden .content {
                             <input type="date" class="form-control" id="fechaCita" required>
                         </div>
                     
+                        <div class="mb-3">
+
+                        </div>
+
+                        <!-- Hora -->
                         <!-- Hora -->
                         <div class="mb-3">
-                            <label for="horaCita" class="form-label">Hora</label>
-                            <input type="time" class="form-control" id="horaCita" required>
+                            <label for="doctor" class="form-label">Doctor/Especialista</label>
+                            <select class="form-control" id="horaCita" required>
+                                <option value="" disabled selected>Seleccione un doctor</option>
+                            </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="horaCita" class="form-label">Hora</label>
+                            <select class="form-control" id="horaCita" required>
+                                <option value="" disabled selected>Selecciona una hora</option>
+                                <option value="07:00">07:00</option>
+                                <option value="07:30">07:30</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                            </select>
+                        </div>
+
                     
                         <!-- Motivo -->
                         <div class="mb-3">
@@ -282,7 +311,9 @@ body.sidebar-hidden .content {
             app.loadinicio()
             // app.lastPost();
         })
+        
     </script>
+    
 
 <?php 
     closeFooter();
