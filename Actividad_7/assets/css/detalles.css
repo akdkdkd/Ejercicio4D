@@ -66,13 +66,17 @@
     height: 60px;
     background: white;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 1rem;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     z-index: 10;
+}
+
+.topbar span {
+    margin-left: auto;
 }
 
 .topbar .userphoto img {
@@ -156,8 +160,57 @@ section.p-3 {
         height: 40px;
 }
 
-.date-footer intput > div input {
+.date-footer input > div input {
     color: #000000;
     font-size: 18px;
 }
 /* --- End content Section Styles --- */
+
+/* Responsivity settings */
+/* Sidebar en móviles */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -250px;
+        top: 60px;
+        height: calc(100vh - 60px);
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.hidden {
+        left: 0;
+    }
+
+    .topbar {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    section.p-3 {
+        margin-left: 0;
+        margin-top: 60px;
+    }
+
+    .sidebar {
+        left: -250px;
+        top: 0; /* Cambiado de 60px */
+        height: 100vh; /* Ocupa toda la altura */
+        padding-top: 60px; /* Empuja el contenido hacia abajo */
+        z-index: 25; /* Mayor que el topbar */
+    }
+
+    /* Asegúrate que el botón tenga mayor z-index */
+    #toggleSidebar {
+        position: relative;
+        z-index: 30; /* Mayor que la sidebar */
+    }
+}
+
+/* Z-index para mantener topbar sobre sidebar */
+.topbar {
+    z-index: 20;
+}
+
+.sidebar {
+    z-index: 15;
+}
+/* -------------------- */
