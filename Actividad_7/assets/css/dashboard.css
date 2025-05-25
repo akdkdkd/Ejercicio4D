@@ -41,7 +41,7 @@ body {
     z-index: 1000
 }
 
-.sidebar .brand {
+/* .sidebar .brand {
     margin-top: 60px;
     font-size: 1.5rem;
     display: flex;
@@ -52,14 +52,14 @@ body {
     text-decoration: none;
     pointer-events: none;
     color: white;
-}
+} */
 
 .sidebar .side-menu {
     list-style: none;
 }
 
 .sidebar .side-menu li {
-    margin: 1rem 0;
+    margin: 1.5rem 0;
 }
 
 .sidebar .side-menu a {
@@ -69,8 +69,13 @@ body {
     align-items: center;
     gap: 0.75rem;
     font-size: 1rem;
-    padding: 0.5rem;
+    padding: 0.75rem 1rem;
     transition: background 0.3s;
+}
+
+.sidebar .side-menu .icon {
+
+    padding: 0.75rem 1rem;
 }
 
 .sidebar .side-menu a:hover {
@@ -94,8 +99,11 @@ body {
     z-index: 10;
 }
 
-.toggle-btn {
-    z-index: 1100; /* más que el sidebar */
+.topbar .topbar-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 1.5rem;
+    color: #6a1b9a;
 }
 
 .topbar .userphoto img {
