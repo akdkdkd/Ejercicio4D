@@ -134,3 +134,19 @@ p.text-center {
 .modal-title {
     font-weight: bold;
 }
+
+form.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+#btnConsultarCita {
+    background-color: #1976d2;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+#btnConsultarCita:hover {
+    background-color: #1565c0;
+}

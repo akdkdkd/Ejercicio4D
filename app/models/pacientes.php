@@ -6,6 +6,7 @@
 
         protected $table;
         protected $fillable = [
+            'id',
             'name',
             'curp',
             'contacto',

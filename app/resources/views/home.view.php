@@ -30,10 +30,15 @@ body {
     flex-direction: column;
     padding: 1rem;
     position: fixed;
-    height: 100vh;
     top: 0;
     left: 0;
-    z-index: 1000;
+    height: 100vh;
+    z-index: 1050; /* por encima de topbar y contenido */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+.sidebar.show {
+    transform: translateX(0);
 }
 
 .sidebar .brand {
@@ -74,6 +79,7 @@ body {
 /* Topbar section styles */
 .topbar {
     width: calc(100% - 250px);
+    
     height: 60px;
     background: white;
     display: flex;
@@ -86,12 +92,6 @@ body {
     z-index: 999;
 }
 
-.topbar .userphoto img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
 /* Encabezado de bienvenida */
 h1.text-center.mt-4,
 p.text-center {
@@ -99,7 +99,12 @@ p.text-center {
     margin-left: 0;
     margin-right: 0;
 }
-
+.content {
+    margin-top: 60px;
+    margin-left: 250px;
+    padding: 2rem;
+    flex-grow: 1;
+}
 /* Ajustes para el contenedor general */
 .container {
     max-width: 960px;
@@ -109,8 +114,15 @@ p.text-center {
 
 /* Cartas */
 .card {
-    border-radius: 0.5rem;
-    transition: transform 0.2s ease;
+    height: 250px;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .card:hover {
@@ -142,7 +154,57 @@ p.text-center {
 .modal-title {
     font-weight: bold;
 }
+.sidebar {
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
 
+.sidebar.hidden {
+    transform: translateX(-100%);
+}
+
+/* Ajustes para topbar y contenido cuando sidebar esté oculto */
+body.sidebar-hidden .topbar {
+    margin-left: 0;
+    width: 100%;
+}
+
+body.sidebar-hidden .content {
+    margin-left: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+body.sidebar-hidden {
+    padding-left: 0;
+}
+
+body.sidebar-hidden .topbar {
+    width: 100%;
+}
+
+body.sidebar-hidden .content {
+    margin-left: 0;
+}
+
+/* opcion de responsividad */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .appointment-card {
+        grid-column: 1;
+        width: 100%;
+    }
+}
 </style>
 
 

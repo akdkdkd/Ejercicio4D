@@ -20,20 +20,21 @@ function setHeader($args){
         }
     </style> 
 </head>
-<body>
+<body class="">
 
 
     <?php if($currentUri !== '/Session/iniSession'): ?>
     <!-- Sidebar / barra lateral -->
     <section id="sidebar" class="sidebar">
-        <a href="#" class="brand"><i class='bx bx-plus-medical'></i>Purple label</a>
+        <a href="/" class="brand"><i class='bx bx-plus-medical'></i>Purple label</a>
         <ul class="side-menu">
-            <?php if ($currentUri !== '/') : ?>
+            <?php if ($currentUri !== '/' && $currentUri !== '/Miscitas') : ?>
             <li><a href="/dashboard"><i class='bx bxs-dashboard icon'></i>Dashboard</a></li>
             <li><a href="/lista"><i class='bx bx-list-ul icon'></i>Lista</a></li>
             <?php else: ?>
             <li><a href="/"><i class='bx bxs-dashboard icon'></i>Agendar citas</a></li>
-            <li><a href="/"><i class='bx bxs-dashboard icon'></i>Mis citas</a></li>
+            <li><a href="/Miscitas"><i class='bx bxs-dashboard icon'></i>Mis citas</a></li>
+            <li><a href="/"><i class='bx bxs-dashboard icon'></i>Nuestros Doctores</a></li>
             <?php endif; ?>
         </ul>
 
@@ -43,6 +44,10 @@ function setHeader($args){
 
 <!-- Topbar section -->
 <nav class="topbar">
+    <button id="toggleSidebar" class="btn btn-primary me-auto d-md-none">
+    <i class="bi bi-list"></i>
+</button>
+
     <?php if (isset($ua->sv) && $ua->sv): ?>
         <li class="nav-item dropdown me5">
             <a href="#" class="nav-link dropdown-toggle" role="button"
@@ -50,6 +55,8 @@ function setHeader($args){
                 <?= isset($ua->username) ? $ua->username : '' ?>
             </a>
             <ul class="dropdown-menu">
+                <li><a href="/dashboard" class="dropdown-item btn btn-link">Dashboard</a></li>
+                <hr>
                 <li><a href="/Session/logout" class="dropdown-item btn btn-link">Cerrar sesión</a></li>
             </ul>
         </li>
@@ -59,6 +66,11 @@ function setHeader($args){
         </li>
     <?php endif; ?>
 </nav>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+
+
     <?php endif; ?>
 
 <?php

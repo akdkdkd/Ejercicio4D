@@ -8,6 +8,8 @@ use app\models\citas as citas;
 use app\models\interactions as inter;
 use app\models\pacientes as pacientes;
 use app\models\user as user;
+use app\classes\View as View;
+use app\controllers\auth\SessionController as SC;
 // use app\models\pacientes
 
 class CitasController extends Controller {
@@ -15,7 +17,8 @@ class CitasController extends Controller {
         parent::__construct();
     }
 
-    public function index(){}
+
+
 
 public function getqcitas($params = null){
     if (!isset($params[2])) {
@@ -58,6 +61,20 @@ public function getlista($params = null){
 
     echo json_encode($result);
 }
+
+public function consultaCitas($params = null){
+    $datos = filter_input_array(INPUT_POST , FILTER_SANITIZE_SPECIAL_CHARS);
+    $pacientes = new pacientes();
+    $result = $pacientes->where([["curp", $datos['curp']], ["email", $datos['email']]])->get();
+    //imprimir el resultado en consola
+    if(count(json_decode($result)) > 0){
+        $citas = new citas();
+        $result2 = $citas->where([["paciente_id", json_decode($result)[0]->id]])->get();
+        echo json_encode(["r" => json_decode($result2)]);
+
+    }
+}
+
 
 // public function getPacientes($params = null){
 //     $citas = new citas();

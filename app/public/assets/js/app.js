@@ -8,6 +8,8 @@ const app = {
         getPacientes: '/Pacientes/getPacientes',
         getlitas: '/Citas/getlista',
         inicio: '/Home/getHome',
+        consultaCitas: '/Citas/consultaCitas',
+        cancelarCita: '/Citas/cancelarCita',
     },
     user: {
         sv: false,

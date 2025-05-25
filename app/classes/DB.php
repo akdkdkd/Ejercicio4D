@@ -137,6 +137,7 @@ class DB {
         $stmt -> execute();
         return $stmt ->insert_id;
     }
+    
 
     public function delete(){
         $sql = 'delete from ' . str_replace("app\\models\\","",get_class( $this ) ) . 

@@ -7,6 +7,14 @@
     <script src="<?=JS?>bootstrap.js"></script>
     <script src="<?=JS?>sweetalert2.js"></script>
     <script src="<?=JS?>app.js"></script>
+    <script>
+$(document).ready(function() {
+    $('#toggleSidebar').on('click', function() {
+        $('#sidebar').toggleClass('hidden');
+        $('body').toggleClass('sidebar-hidden');
+    });
+});
+</script>
 
     
     <script>
