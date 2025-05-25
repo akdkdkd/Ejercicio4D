@@ -13,6 +13,17 @@ body {
 }
 
 /* Sidebar */
+
+.toggle-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6a1b9a;
+    margin-right: auto;
+}
+
 .sidebar {
     width: 250px;
     background: #6a1b9a;
@@ -142,17 +153,75 @@ body {
 
 
 /* opcion de responsividad */
+@media (max-width: 1024px) {
+    .toggle-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 1024px) {
+    .topbar {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    
+
+    .sidebar {
+        position: absolute;
+        left: -250px; /* Oculta el sidebar por defecto */
+        transition: left 0.3s ease-in-out;
+        z-index: 100;
+    }
+
+    .sidebar.active {
+        left: 0; /* Mostrar sidebar cuando se active */
+    }
+
+    .content {
+        margin-left: 0;
+        padding-top: 70px;
+    }
+}
+
+/* Responsive design para pantallas menores a 768px */
 @media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
+        row-gap: 1rem;
     }
 
     .card {
         width: 100%;
+        height: auto;
     }
 
     .appointment-card {
         grid-column: 1;
         width: 100%;
+    }
+
+    .topbar .userphoto img {
+        height: 35px;
+        width: 35px;
+    }
+}
+
+/* Responsive design para pantallas menores a 480px */
+@media (max-width: 480px) {
+    .brand {
+        font-size: 1.2rem;
+    }
+
+    .sidebar .side-menu a {
+        font-size: 0.9rem;
+    }
+
+    .card h1 {
+        font-size: 2rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
     }
 }
