@@ -111,6 +111,7 @@ body {
 .topbar-title {
     font-size: 1.2rem;
     font-weight: bold;
+    padding: 1rem;
     color: #6a1b9a;
 }
 
