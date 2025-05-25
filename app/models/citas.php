@@ -30,4 +30,17 @@ public function getCitas($did) {
     return $result;
 }
 
+public function eliminarCita($id) {
+    $result = $this->where([['id', $id]])->delete();
+    return $result;
+}
+
+public function updateCita($id){
+    $sql = "UPDATE citas SET estado = 'Cancelada' WHERE id = ?";
+    $stmt = $this->table->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+}
+
 }

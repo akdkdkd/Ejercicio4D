@@ -72,6 +72,7 @@ setFooter($d);
             }).then(resp => resp.json())
 .then(resp => {
     if (resp.r !== false && Array.isArray(resp.r)) {
+        console.log("Respuesta del servidor:", resp);
         const $lista = $("#listaCitas").empty();
 
         if (resp.r.length === 0) {
@@ -87,17 +88,28 @@ setFooter($d);
                     minute: '2-digit'
                 });
 
-                $lista.append(`
-                    <div class="list-group-item">
-                        <p><strong>Fecha:</strong> ${fechaFormateada}</p>
-                        <p><strong>Motivo:</strong> ${cita.motivo}</p>
-                        <p><strong>Estado:</strong> ${cita.estado}</p>
-                        <div class="d-flex justify-content-end gap-2 mt-3">
-                            <button class="btn btn-sm btn-warning" onclick="editarCita(${cita.id})">Editar</button>
-                            <button class="btn btn-sm btn-danger" onclick="cancelarCita(${cita.id})">Cancelar</button>
-                        </div>
-                    </div>
-                `);
+if (cita.estado === "Pendiente") {
+    $lista.append(`
+        <div class="list-group-item">
+            <p><strong>Fecha:</strong> ${fechaFormateada}</p>
+            <p><strong>Motivo:</strong> ${cita.motivo}</p>
+            <p><strong>Estado:</strong> ${cita.estado}</p>
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <button class="btn btn-sm btn-warning" onclick="editarCita(${cita.id})">Editar</button>
+                <button class="btn btn-sm btn-danger" onclick="cancelarCita(${cita.id})">Cancelar</button>
+            </div>
+        </div>
+    `);
+} else {
+    $lista.append(`
+        <div class="list-group-item">
+            <p><strong>Fecha:</strong> ${fechaFormateada}</p>
+            <p><strong>Motivo:</strong> ${cita.motivo}</p>
+            <p><strong>Estado:</strong> ${cita.estado}</p>
+        </div>
+    `);
+}
+
 
             });
         }
@@ -110,6 +122,7 @@ setFooter($d);
 })
 .catch(err => {
                 console.error("Error:", err);
+                $("#error").removeClass("d-none");
             });
         })
     })
@@ -132,7 +145,8 @@ function cancelarCita(id) {
         })
         .then(resp => resp.json())
         .then(data => {
-            if (data.success) {
+            console.log("Respuesta del servidor:", data);
+            if (data) {
                 alert("Cita cancelada correctamente.");
                 // Puedes volver a consultar las citas automáticamente
                 $("#consulta-cita").submit();

@@ -69,10 +69,22 @@ public function consultaCitas($params = null){
     //imprimir el resultado en consola
     if(count(json_decode($result)) > 0){
         $citas = new citas();
-        $result2 = $citas->where([["paciente_id", json_decode($result)[0]->id]])->get();
+        $result2 = $citas->where([["paciente_id", json_decode($result)[0]->id], ['estado', 'Pendiente']])->get();
         echo json_encode(["r" => json_decode($result2)]);
 
     }
+}
+
+public function cancelarCita(){
+
+    $data = json_decode(file_get_contents('php://input'), true);
+    $id = $data['id'];
+    $citas = new citas();
+    $citas->updateCita($id);
+
+
+
+    echo json_encode($id);
 }
 
 
