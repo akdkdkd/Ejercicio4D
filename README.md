@@ -9,8 +9,13 @@ Este proyecto es una aplicación para la gestión de un consultorio médico. Su 
 - Servidor web (Apache)
 
 ### Pasos para instalar
-  ``bash
+  1. Clonar el repositorio
     git clone https://github.com/JadeMajestyX/Ejercicio4D.git
     cd consultorio-medico
+
+  3. Importar la base de datos
+     - Crear una base de datos llamada consultorio
+     - Abrir el archivo consultorio.sql y ejecutarlo en un gestor de base de datos
+     - Revisar que las tablas fueron creadas correctamente 
 
 
