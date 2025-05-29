@@ -6,6 +6,7 @@
 
         protected $table;
         protected $fillable = [
+            'id',
             'name',
             'username',
             'contacto',
@@ -43,8 +44,9 @@
         }
 
         public function getAllUser(){
-            $result = $this -> select(['a.id', 'a.name', 'a.username', 'a.contacto', 'a.fenac', 'a.genero', 'a.email', 'a.especialidad'])
+            $result = $this -> select(['id','name','username','contacto','fenac','genero','email','especialidad'])
                             -> where([['activo',1]])
+                            -> orderBy([['name','asc']])
                             -> get();
             return $result;
         }

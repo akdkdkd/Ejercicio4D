@@ -34,7 +34,7 @@ public function getqcitas($params = null){
 public function getcitas($params = null){
     $citas = new citas();
     $ccitas = $citas->count('doctor_id')
-                    ->where([['doctor_id',$params[2]], ['estado','Pendiente']])
+                    ->where([['doctor_id',$params[2]], ['estado','Pendiente'], ['fecha', date('Y-m-d')]])
                     ->get();
     $pacientes = new citas();
     $pac = $pacientes->count('paciente_id')
@@ -51,6 +51,13 @@ public function getcitas($params = null){
 
 
     echo json_encode(array_merge(json_decode($ccitas), json_decode($pac), json_decode($tdoc), json_decode($activos)));
+}
+
+public function getHoras($params = null){
+    $citas = new citas();
+    $dia = $params[2];
+    $result = $citas->getHoras($dia);
+    echo json_encode($result);
 }
 
 
@@ -78,7 +85,7 @@ public function consultaCitas($params = null){
 public function cancelarCita(){
 
     $data = json_decode(file_get_contents('php://input'), true);
-    $id = $data['id'];
+    $id = $data['paciente_id'];
     $citas = new citas();
     $citas->updateCita($id);
 
@@ -87,6 +94,23 @@ public function cancelarCita(){
     echo json_encode($id);
 }
 
+
+public function agendaCita($params = null){
+    $cita = new citas();
+    $datos = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+    $numero = $datos['numero_seguro'];
+    $pacientes = new pacientes();
+    $paciente = $pacientes->where([['numero_seguro', $numero]])->get();
+    // print_r($paciente);
+    if (count(json_decode($paciente)) > 0) {
+        $id_paciente = json_decode($paciente)[0]->id;
+        $response = $cita->createNewCita($datos, $id_paciente);
+        echo json_encode(["r" => $response]);
+    } else {
+        $datos['paciente_id'] = null; // o manejar el caso de error
+        echo json_encode(["r" => false]);
+    } 
+}
 
 // public function getPacientes($params = null){
 //     $citas = new citas();

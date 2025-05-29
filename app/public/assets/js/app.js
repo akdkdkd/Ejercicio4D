@@ -10,6 +10,9 @@ const app = {
         inicio: '/Home/getHome',
         consultaCitas: '/Citas/consultaCitas',
         cancelarCita: '/Citas/cancelarCita',
+        getDoctores: '/Doctores/doctores',
+        getHoras: '/Citas/getHoras',
+        agendarCita: '/Citas/agendaCita'
     },
     user: {
         sv: false,
@@ -103,7 +106,7 @@ const app = {
                                 </div>
                                 <div>
                                     <label for="hour">Hora: </label>
-                                    <p id="hour">${data.fecha ? new Date(data.fecha).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Sin hora'}</p>
+                                    <p id="hour">${data.hora || 'Sin hora'}</p>
                                 </div>
                                 <div>
                                     <label for="reason">Motivo: </label>
@@ -167,7 +170,7 @@ const app = {
                 <tr>
                     <td>${index + 1}</td>
                     <td>${fecha || 'Sin fecha'}</td>
-                    <td>${hora || 'Sin hora'}</td>
+                    <td>${cita.hora || 'Sin hora'}</td>
                     <td>${cita.name || 'Sin paciente'}</td>
                     <td>
                         <button class="btn btn-success btn-view" data-index="${index}">
@@ -206,7 +209,7 @@ const app = {
             this.$list.html('<h2>Cargando citas...</h2>');
             console.log('User ID:', this.user.id);
             let citas = await $.getJSON(`${this.routes.getlitas}/${this.user.id}`);
-            console.log('Citas raw:', citas);
+            // console.log('Citas raw:', citas);
 
             // Asegurar que citas sea un arreglo
             if (typeof citas === 'string') {

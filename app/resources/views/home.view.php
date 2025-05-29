@@ -229,7 +229,7 @@ body.sidebar-hidden .content {
     <div class="modal fade" id="modalAgendarCita" tabindex="-1" aria-labelledby="modalAgendarCitaLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formAgendarCita">
+                <form action="" id="formAgendarCita">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalAgendarCitaLabel">Agendar Nueva Cita</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -238,14 +238,14 @@ body.sidebar-hidden .content {
 
                         <!-- Nombre del paciente -->
                         <div class="mb-3">
-                            <label for="nombrePaciente" class="form-label">Nombre completo</label>
-                            <input type="text" class="form-control" id="nombrePaciente" required>
+                            <label for="numero_seguro" class="form-label">Numero de seguro</label>
+                            <input type="text" name="numero_seguro" class="form-control" id="numero_seguro" required>
                         </div>
 
                         <!-- Día -->
                         <div class="mb-3">
                             <label for="fechaCita" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fechaCita" required>
+                            <input type="date" class="form-control" name="fechaCita" id="fechaCita" required>
                         </div>
                     
                         <div class="mb-3">
@@ -255,14 +255,14 @@ body.sidebar-hidden .content {
                         <!-- Hora -->
                         <!-- Hora -->
                         <div class="mb-3">
-                            <label for="doctor" class="form-label">Doctor/Especialista</label>
-                            <select class="form-control" id="horaCita" required>
-                                <option value="" disabled selected>Seleccione un doctor</option>
+                            <label for="doctor" class="form-label">Doctor / Especialista</label>
+                            <select class="form-control doctor" name="doctor" id="doctor" required>
+                                
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="horaCita" class="form-label">Hora</label>
-                            <select class="form-control" id="horaCita" required>
+                            <select class="form-control" name="horaCita" id="horaCita" required>
                                 <option value="" disabled selected>Selecciona una hora</option>
                                 <option value="07:00">07:00</option>
                                 <option value="07:30">07:30</option>
@@ -286,7 +286,7 @@ body.sidebar-hidden .content {
                         <!-- Motivo -->
                         <div class="mb-3">
                             <label for="motivoCita" class="form-label">Motivo de la cita</label>
-                            <textarea class="form-control" id="motivoCita" rows="4" maxlength="1000" required></textarea>
+                            <textarea class="form-control" name="motivo" id="motivoCita" rows="4" maxlength="1000" required></textarea>
                             <div class="form-text">Máximo 1000 caracteres.</div>
                         </div>
                     
@@ -313,6 +313,72 @@ body.sidebar-hidden .content {
         })
         
     </script>
+<script>
+    $(async function () {
+        const $doctorSelect = $("#doctor");
+        let html = "";
+
+        try {
+            let doctores = await $.getJSON(app.routes.getDoctores);
+            console.log("Tipo de doctores:", typeof doctores);
+            console.log("Doctores recibidos:", doctores);
+
+            // Parsear si viene como string
+            if (typeof doctores === "string") {
+                doctores = JSON.parse(doctores);
+            }
+
+            if (Array.isArray(doctores) && doctores.length > 0) {
+                html = `<option value="" disabled selected>Selecciona un doctor</option>`;
+                doctores.forEach(doctor => {
+                    html += `<option value="${doctor.id}">${doctor.name} - ${doctor.especialidad}</option>`;
+                });
+            } else {
+                html = `<option value="" disabled selected>No hay doctores disponibles</option>`;
+            }
+        } catch (error) {
+            console.error("Error al obtener los doctores:", error);
+            html = `<option value="" disabled selected>Error al cargar doctores</option>`;
+        }
+
+        $doctorSelect.html(html);
+    });
+</script>
+
+
+<script>
+    $(function(){
+        const $form = $("#formAgendarCita")
+        $form.on("submit", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const data = new FormData(this);
+            // console.log("Datos del formulario:", data);
+            fetch('/Citas/agendaCita', {
+                method: 'POST',
+                body: data
+            }).then(resp => resp.json())
+              .then(resp =>{
+                if(resp.r !== false){
+                    // Mostrar mensaje de éxito
+                    alert("Cita agendada exitosamente");
+                    // Cerrar el modal
+                    $("#modalAgendarCita").modal('hide');
+                    // Limpiar el formulario
+                    $form[0].reset();
+                } else {
+                    // Mostrar mensaje de error
+                    alert("El numero de seguro es incorrecto o no existe");
+                }
+            }).catch(err => {
+                console.error("Error al agendar la cita:", err);
+                alert("Ocurrió un error al procesar tu solicitud.");
+            })
+        })
+    })
+</script>
+
+
     
 
 <?php 

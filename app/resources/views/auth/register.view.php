@@ -88,7 +88,7 @@
                         $p2.trigger("focus")
                     })
                 }else{
-                    const data = new FormData( this )
+                    const data = new FormData( this );
                     fetch( app.routes.register,{
                         method : 'POST',
                         body : data
