@@ -72,7 +72,7 @@ public function getlista($params = null){
 public function consultaCitas($params = null){
     $datos = filter_input_array(INPUT_POST , FILTER_SANITIZE_SPECIAL_CHARS);
     $pacientes = new pacientes();
-    $result = $pacientes->where([["curp", $datos['curp']], ["email", $datos['email']]])->get();
+    $result = $pacientes->where([["numero_seguro", $datos['curp']], ["email", $datos['email']]])->get();
     //imprimir el resultado en consola
     if(count(json_decode($result)) > 0){
         $citas = new citas();
@@ -82,16 +82,31 @@ public function consultaCitas($params = null){
     }
 }
 
-public function cancelarCita(){
+public function cancelarCita() {
+    // Obtener el cuerpo del POST como JSON
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true); // Convertir a array asociativo
 
-    $data = json_decode(file_get_contents('php://input'), true);
-    $id = $data['paciente_id'];
+    // Validar que se haya recibido un ID numérico
+    if (isset($data['id']) && is_numeric($data['id'])) {
+        $id = (int) $data['id'];
+        $citas = new citas();
+        $citas->updateCita($id);
+
+        echo json_encode(['status' => 'success', 'id' => $id]);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'ID inválido']);
+    }
+}
+
+public function actualizarCita($params = null){
+    $json = file_get_contents('php://input');
+    $datos = json_decode($json, true); // Convertir a array asociativo
+    // print("Datos recibidos para actualizar la cita:\n");
+    // print_r($datos);
     $citas = new citas();
-    $citas->updateCita($id);
-
-
-
-    echo json_encode($id);
+    $response = $citas->actualizarCita($datos);
+    echo json_encode(["success" => true]);
 }
 
 

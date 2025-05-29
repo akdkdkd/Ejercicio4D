@@ -7,6 +7,7 @@ class citas extends Model {
     protected $table;
     
     protected $fillable = [
+        'id',
         'fecha',
         'hora',
         'paciente_id',
@@ -44,6 +45,21 @@ public function updateCita($id){
     $stmt->close();
 }
 
+public function actualizarCita($data = []) {
+    // print_r($data);
+    $citaId = $data['id'] ?? null;
+    $fechaCita = $data['fecha'] ?? null;
+    $horaCita = $data['hora'] ?? null;
+    $motivo = $data['motivo'] ?? null;
+
+    $sql = "UPDATE citas SET fecha = ?, hora = ?, motivo = ? WHERE id = ?";
+    $stmt = $this->table->prepare($sql);
+    $stmt->bind_param("sssi", $fechaCita, $horaCita, $motivo, $citaId);
+    $stmt->execute();
+    $stmt->close();
+    return $citaId; // Retorna el ID de la cita actualizada
+}
+
 //el campo se llama fecha (2025-05-13 11:30:00)
 public function getHoras($dia){
     $result = $this->select(['fecha'])
@@ -54,6 +70,7 @@ public function getHoras($dia){
 public function createNewCita($data=[], $paciente_id = null) {
     $this->values = [];
     $this->values = [
+        "",
         $data['fechaCita'],
         $data['horaCita'],
         $paciente_id, // Asumiendo que $paciente_id es el ID del paciente

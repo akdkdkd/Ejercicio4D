@@ -34,7 +34,7 @@ function setHeader($args){
             <?php else: ?>
             <li><a href="/"><i class='bx bxs-dashboard icon'></i>Agendar citas</a></li>
             <li><a href="/Miscitas"><i class='bx bxs-dashboard icon'></i>Mis citas</a></li>
-            <li><a href="/"><i class='bx bxs-dashboard icon'></i>Nuestros Doctores</a></li>
+
             <?php endif; ?>
         </ul>
 

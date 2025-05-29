@@ -8,7 +8,7 @@
         protected $fillable = [
             'id',
             'name',
-            'curp',
+            'numero_seguro',
             'contacto',
             'fenac',
             'genero',
@@ -40,7 +40,7 @@ public function getPacientes($params = null){
         return json_encode([]); // o lo que corresponda
     }
 
-    $result = $this->select(['a.id', 'a.name', 'a.curp', 'a.contacto', 'a.fenac', 'a.genero', 'a.email'])
+    $result = $this->select(['a.id', 'a.name', 'a.numero_seguro', 'a.contacto', 'a.fenac', 'a.genero', 'a.email'])
                    ->join('citas b', 'a.id=b.paciente_id')
                    ->where([['b.doctor_id', $params], ['b.estado', 'Pendiente']])
                    ->get();

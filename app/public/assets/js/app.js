@@ -12,7 +12,8 @@ const app = {
         cancelarCita: '/Citas/cancelarCita',
         getDoctores: '/Doctores/doctores',
         getHoras: '/Citas/getHoras',
-        agendarCita: '/Citas/agendaCita'
+        agendarCita: '/Citas/agendaCita',
+        actualizarCita: '/Citas/actualizarCita',
     },
     user: {
         sv: false,

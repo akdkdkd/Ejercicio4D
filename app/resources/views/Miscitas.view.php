@@ -12,7 +12,7 @@ setHeader($d);
 
         <form action="" id="consulta-cita" class="card p-4 shadow mx-auto mt-5 p-5" style="max-width: 500px;">
             <div class="form-group mb-3">
-                <label for="curp">CURP</label>
+                <label for="curp">Numero de seguro</label>
                 <input type="text" name="curp" id="curp" class="form-control" required  placeholder="Ingresa tu CURP">
             </div>
 
@@ -52,6 +52,49 @@ setHeader($d);
   </div>
 </div>
 
+<!-- Modal para editar cita -->
+<div class="modal fade" id="modalEditarCita" tabindex="-1" aria-labelledby="modalEditarCitaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarCitaLabel">Editar Cita</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEditarCita">
+          <input type="hidden" id="editarCitaId">
+          <div class="mb-3">
+            <label for="editarFecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="editarFecha" required>
+          </div>
+            <div class="mb-3">
+            <label for="editarHora" class="form-label">Hora</label>
+            <select class="form-control" id="editarHora" required>
+                <option value="" disabled selected>Selecciona una hora</option>
+                <!-- Opciones de 07:00 a 14:00 cada 30 minutos -->
+                <?php
+                for ($h = 7; $h <= 14; $h++) {
+                    $hora = str_pad($h, 2, '0', STR_PAD_LEFT);
+                    echo "<option value='{$hora}:00'>{$hora}:00</option>";
+                    if ($h < 14) echo "<option value='{$hora}:30'>{$hora}:30</option>";
+                }
+                ?>
+            </select>
+            </div>
+
+          <div class="mb-3">
+            <label for="editarMotivo" class="form-label">Motivo</label>
+            <input type="text" class="form-control" id="editarMotivo" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <?php
@@ -91,7 +134,8 @@ setFooter($d);
 if (cita.estado === "Pendiente") {
     $lista.append(`
         <div class="list-group-item">
-            <p><strong>Fecha:</strong> ${fechaFormateada}</p>
+            <p><strong>Fecha:</strong> ${cita.fecha}</p>
+            <p><strong>Hora:</strong> ${cita.hora}</p>
             <p><strong>Motivo:</strong> ${cita.motivo}</p>
             <p><strong>Estado:</strong> ${cita.estado}</p>
             <div class="d-flex justify-content-end gap-2 mt-3">
@@ -103,7 +147,8 @@ if (cita.estado === "Pendiente") {
 } else {
     $lista.append(`
         <div class="list-group-item">
-            <p><strong>Fecha:</strong> ${fechaFormateada}</p>
+            <p><strong>Fecha:</strong> ${cita.fecha}</p>
+            <p><strong>Hora:</strong> ${cita.hora}</p>
             <p><strong>Motivo:</strong> ${cita.motivo}</p>
             <p><strong>Estado:</strong> ${cita.estado}</p>
         </div>
@@ -129,19 +174,39 @@ if (cita.estado === "Pendiente") {
 </script>
 
 <script>
-    function editarCita(id) {
-    console.log("Editar cita con ID:", id);
-    // Aquí puedes redirigir al formulario de edición o abrir otro modal
+function editarCita(id) {
+    // Obtener la cita desde la lista mostrada
+    const cita = Array.from(document.querySelectorAll("#listaCitas .list-group-item"))
+        .map(el => {
+            return {
+                id: id,
+                fecha: el.querySelector("p:nth-child(1)")?.innerText.split(": ")[1],
+                hora: el.querySelector("p:nth-child(2)")?.innerText.split(": ")[1],
+                motivo: el.querySelector("p:nth-child(3)")?.innerText.split(": ")[1],
+            };
+        }).find(c => c.id == id);
+
+    if (!cita) return alert("No se pudo encontrar la cita para editar.");
+
+    // Rellenar campos del formulario de edición
+    document.getElementById("editarCitaId").value = id;
+    document.getElementById("editarFecha").value = cita.fecha.split("T")[0] || "";
+    document.getElementById("editarHora").value = cita.hora || "";
+    document.getElementById("editarMotivo").value = cita.motivo || "";
+    
+
+    const modalEditar = new bootstrap.Modal(document.getElementById("modalEditarCita"));
+    modalEditar.show();
 }
 
+
+
+
 function cancelarCita(id) {
-    if (confirm("¿Estás seguro de que deseas cancelar esta cita?")) {
+    if (confirm("¿Estás seguro de que deseas cancelar esta cita?  ")) {
         fetch(app.routes.cancelarCita, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ id })
+            body: JSON.stringify({ id: id }),
         })
         .then(resp => resp.json())
         .then(data => {
@@ -161,6 +226,45 @@ function cancelarCita(id) {
 }
 
 </script>
+<script>
+document.getElementById("formEditarCita").addEventListener("submit", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const citaEditada = {
+        id: document.getElementById("editarCitaId").value,
+        fecha: document.getElementById("editarFecha").value,
+        hora: document.getElementById("editarHora").value,
+        motivo: document.getElementById("editarMotivo").value
+    };
+
+    // Realiza el fetch (tú puedes modificar la URL y el cuerpo según tus necesidades)
+    fetch(app.routes.actualizarCita, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(citaEditada)
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        console.log("Respuesta del servidor al editar:", data);
+        if (data && data.success) {
+            alert("Cita actualizada correctamente.");
+            bootstrap.Modal.getInstance(document.getElementById("modalEditarCita")).hide();
+            // Opcionalmente recarga las citas
+            document.getElementById("consulta-cita").dispatchEvent(new Event("submit"));
+        } else {
+            alert("Hubo un error al actualizar la cita.");
+        }
+    })
+    .catch(err => {
+        console.error("Error al editar la cita:", err);
+        alert("Error en la solicitud.");
+    });
+});
+</script>
+
 
 <?php 
     closeFooter();
