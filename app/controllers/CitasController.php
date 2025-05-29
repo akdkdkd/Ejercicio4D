@@ -62,9 +62,10 @@ public function getHoras($params = null){
 
 
 public function getlista($params = null){
+    // Verificar si el parámetro está definido
         //obtener pacientes
         $citas = new citas();
-    $result = $citas->getCitas($params[2]);
+        $result = $citas->getCitas($params[2]);
 
     echo json_encode($result);
 }
@@ -79,6 +80,21 @@ public function consultaCitas($params = null){
         $result2 = $citas->where([["paciente_id", json_decode($result)[0]->id], ['estado', 'Pendiente']])->get();
         echo json_encode(["r" => json_decode($result2)]);
 
+    }
+}
+
+public function completarCita($params = null){
+    $json = file_get_contents('php://input');
+    $datos = json_decode($json, true); // Convertir a array asociativo
+
+    if( isset($datos['id']) && is_numeric($datos['id'])) {
+        $id = (int) $datos['id'];
+        $citas = new citas();
+        $citas->confirmarCita($id);
+
+        echo json_encode(["status" => 'success', "id" => $id]);
+    } else {
+        echo json_encode(["success" => 'error', "message" => "ID inválido"]);
     }
 }
 

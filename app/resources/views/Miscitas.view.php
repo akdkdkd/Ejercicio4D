@@ -13,7 +13,7 @@ setHeader($d);
         <form action="" id="consulta-cita" class="card p-4 shadow mx-auto mt-5 p-5" style="max-width: 500px;">
             <div class="form-group mb-3">
                 <label for="curp">Numero de seguro</label>
-                <input type="text" name="curp" id="curp" class="form-control" required  placeholder="Ingresa tu CURP">
+                <input type="text" name="curp" id="curp" class="form-control" required  placeholder="Ingresa tu Numero de Seguro">
             </div>
 
             <div class="form-group mb-4">

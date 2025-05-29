@@ -14,6 +14,7 @@ const app = {
         getHoras: '/Citas/getHoras',
         agendarCita: '/Citas/agendaCita',
         actualizarCita: '/Citas/actualizarCita',
+        completarCita: '/Citas/completarCita',
     },
     user: {
         sv: false,
@@ -157,6 +158,62 @@ const app = {
         $('#reason').val(cita.reason || cita.motivo || '');
     },
 
+    editarCita: function(index) {
+    const cita = this.currentCitas[index];
+    if (!cita) return alert("No se encontró la cita.");
+
+    // Cargar datos en el formulario
+    $('#editarCitaId').val(cita.id);
+    // Para la fecha, si viene en formato ISO o similar, corta la parte de la fecha
+    let fecha = cita.fecha ? cita.fecha.split(' ')[0] : '';
+    $('#editarFecha').val(fecha);
+    $('#editarHora').val(cita.hora || '');
+    $('#editarMotivo').val(cita.reason || cita.motivo || '');
+
+    // Mostrar modal
+    const modal = new bootstrap.Modal(document.getElementById('modalEditarCita'));
+    modal.show();
+
+
+    document.getElementById("formEditarCita").addEventListener("submit", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const citaEditada = {
+        id: document.getElementById("editarCitaId").value,
+        fecha: document.getElementById("editarFecha").value,
+        hora: document.getElementById("editarHora").value,
+        motivo: document.getElementById("editarMotivo").value
+    };
+
+    // Realiza el fetch (tú puedes modificar la URL y el cuerpo según tus necesidades)
+    fetch(app.routes.actualizarCita, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(citaEditada)
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        console.log("Respuesta del servidor al editar:", data);
+        if (data && data.success) {
+            alert("Cita actualizada correctamente.");
+            app.getLista(); // Recargar la lista de citas
+            bootstrap.Modal.getInstance(document.getElementById("modalEditarCita")).hide();
+            // Opcionalmente recarga las citas
+            document.getElementById("consulta-cita").dispatchEvent(new Event("submit"));
+        } else {
+            alert("Hubo un error al actualizar la cita.");
+        }
+    })
+    .catch(err => {
+        console.error("Error al editar la cita:", err);
+        // alert("Error en la solicitud.");
+    });
+});
+},
+
     // Render tabla de citas usando forEach
     lista: function (citas) {
         if (!Array.isArray(citas) || citas.length === 0) {
@@ -177,8 +234,10 @@ const app = {
                         <button class="btn btn-success btn-view" data-index="${index}">
                             <i class="bi bi-eye"></i>
                         </button>
-                        <button class="btn btn-primary"><i class="bi bi-pencil-square"></i></button>
-                        <button class="btn btn-danger"><i class="bi bi-trash2-fill"></i></button>
+                        <button class="btn btn-primary" onclick="app.editarCita(${index})"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-primary" onclick="app.completarCita(${cita.id})"><i class="bi bi-check"></i></button>
+
+                        <button class="btn btn-danger" onclick="app.cancelarCita(${cita.id})"><i class="bi bi-trash2-fill"></i></button>
                     </td>
                 </tr>
             `;
@@ -259,6 +318,53 @@ const app = {
             console.error(err);
         }
     },
+
+    completarCita : function (id){
+        if (confirm("¿Estás seguro de que deseas completar esta cita?")) {
+            fetch(app.routes.completarCita, {
+                method: "POST",
+                body: JSON.stringify({ id: id}),
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log("Respuesta del servidor:", data);
+                if (data) {
+                    alert("Cita completada correctamente.");
+                    app.getLista();
+                    // Puedes volver a consultar las citas automáticamente
+                    $("#consulta-cita").submit();
+                } else {
+                    alert("Hubo un error al completar la cita.");
+                }
+            })
+            .catch(err => {
+                console.error("Error al completar la cita:", err);
+            });
+        }
+    },
+
+    cancelarCita : function (id) {
+    if (confirm("¿Estás seguro de que deseas cancelar esta cita?  ")) {
+        fetch(app.routes.cancelarCita, {
+            method: "POST",
+            body: JSON.stringify({ id: id }),
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log("Respuesta del servidor:", data);
+            if (data) {
+                alert("Cita cancelada correctamente.");
+                app.getLista();
+                $("#consulta-cita").submit();
+            } else {
+                alert("Hubo un error al cancelar la cita.");
+            }
+        })
+        .catch(err => {
+            console.error("Error al cancelar la cita:", err);
+        });
+    }
+    }
 };
 
 // Inicializar

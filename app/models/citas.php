@@ -45,6 +45,13 @@ public function updateCita($id){
     $stmt->close();
 }
 
+public function confirmarCita($id) {
+    $sql = "UPDATE citas SET estado = 'Confirmada' WHERE id = ?";
+    $stmt = $this->table->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+}
 public function actualizarCita($data = []) {
     // print_r($data);
     $citaId = $data['id'] ?? null;

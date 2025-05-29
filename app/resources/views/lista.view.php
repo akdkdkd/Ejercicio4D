@@ -182,9 +182,7 @@ form .inputField > div input{
     <section class="p-3">
 
         <div class="row">
-            <div class="col-12">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dateForm">Nueva cita <i class="bi bi-calendar-plus"></i></button>
-            </div>
+
 
             <div class="row list" id="list">
 
@@ -250,7 +248,39 @@ form .inputField > div input{
     </div>
     <!-- End of Modal Form -->
     
-    <!-- Read Data Modal section -->
+<!-- Modal para editar cita -->
+<div class="modal fade" id="modalEditarCita" tabindex="-1" aria-labelledby="modalEditarCitaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarCitaLabel">Editar Cita</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEditarCita">
+          <input type="hidden" id="editarCitaId" />
+          <div class="mb-3">
+            <label for="editarFecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="editarFecha" required />
+          </div>
+          <div class="mb-3">
+            <label for="editarHora" class="form-label">Hora</label>
+            <input type="text" class="form-control" id="editarHora" required />
+          </div>
+          <div class="mb-3">
+            <label for="editarMotivo" class="form-label">Motivo</label>
+            <input type="text" class="form-control" id="editarMotivo" required />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
     
 
 
