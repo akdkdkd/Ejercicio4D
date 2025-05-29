@@ -62,14 +62,11 @@ Está diseñado para ser intuitivo, eficiente y fácilmente extensible para dist
 ## 3. Estructura del Proyecto
 
 consultorio/
-│
-└── app/ # Contiene todos los archivos del proyecto
-├── classes/ # Clases bases del framework
-├── controllers/ # Controladores encargados de la lógica del negocio
-├── Models/ # Archivos que controlan los datos
-├── public/ # Archivos accesibles públicamente (index.php, recursos estáticos)
-├── resources/ # Plantillas utilizadas para la aplicación
-│
-├── app.php # Archivo principal que inicializa y ejecuta la aplicación
-└── config.php # Configuración global (variables de entorno, base de datos, rutas)
----
+├── app/ 🗂️ Contiene todos los archivos del proyecto
+│ ├── classes/ 📚 Clases bases del framework
+│ ├── controllers/ ⚙️ Controladores encargados de la lógica del negocio
+│ ├── Models/ 🗃️ Archivos que controlan los datos
+│ ├── public/ 🌐 Archivos accesibles públicamente (index.php, recursos estáticos)
+│ ├── resources/ 📝 Plantillas utilizadas para la aplicación
+│ ├── app.php 🚀 Archivo principal que inicializa y ejecuta la aplicación
+│ └── config.php ⚙️ Configuración global (variables de entorno, base de datos, rutas)
