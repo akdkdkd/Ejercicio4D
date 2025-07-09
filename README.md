@@ -1,5 +1,1 @@
-Descripción:
-
-Instrucciones:
-
-Estructura de archivos:
+Cagada
